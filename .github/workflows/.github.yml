@@ -1,0 +1,32 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: configure
+      run: |
+        git submodule update --init --recursive
+        mkdir build
+        cd build
+        cmake .. -Dtest=ON
+    - name: build
+      run: cmake --build build -j 8
+    - name: test
+      run: pushd build && ctest --output-on-failure -j 8
+    - name: cpack
+      run: |
+        cmake --build build --target package
+        mkdir build/artifacts
+        cp build/*.deb build/artifacts
+        cp build/*.tar.gz build/artifacts
+    - name: Upload math result for job 1
+      uses: actions/upload-artifact@v1
+      with:
+        name: artifacts.zip
+        path: build/artifacts
