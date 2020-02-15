@@ -2,4 +2,4 @@ name: 'Build c++ project'
 description: 'Build c++ project with help cmake'
 runs:
   using: 'node12'
-  image: 'index.js'
+  main: 'index.js'
