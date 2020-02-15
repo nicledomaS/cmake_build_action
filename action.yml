@@ -1,5 +1,5 @@
 name: 'Build c++ project'
 description: 'Build c++ project with help cmake'
 runs:
-  using: python
-  main: main.py
+  using: 'docker'
+  image: 'Dockerfile'
