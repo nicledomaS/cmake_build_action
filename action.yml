@@ -3,3 +3,5 @@ description: 'Build c++ project with help cmake'
 runs:
   using: 'node12'
   main: 'index.js'
+  using: 'pythom'
+  main: 'index.py'
