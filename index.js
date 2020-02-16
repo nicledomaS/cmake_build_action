@@ -14,18 +14,17 @@ try
     const git = execFileSync('git', ['submodule', 'update', '--init', '--recursive']);
 
     var dirName = 'build';
-    var buildPath = path.join(process.cwd(), dirName);
-
+    var buildPath = path.join('/home/ykovalenko/Learning', dirName);//process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
         fs.mkdirSync(buildPath);
     }
 
     process.chdir(buildPath);
-    console.log(`New directory: ${process.cwd()}`);
+    console.log(`Build directory: ${process.cwd()}`);
 
-    const cmakeConfigure = execFileSync('cmake', ['..']);    
-    const cmakeBuild = execFileSync('cmake', ['--build', '.', '-j', `${cpus}`]);
+    const cmakeConfigure = execFileSync('cmake', ['..']);
+    const cmakeBuild = execFileSync('cmake', ['--build', '.', '--', `-j${cpus}`]);
 } 
 catch (err) 
 {
