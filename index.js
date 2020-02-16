@@ -6,14 +6,39 @@ const process = require('process');
 const path = require('path');
 const fs = require('fs');
 
-var cpus = os.cpus().length;
+const submoduleGroup = 'Submodule update';
+const configureGroup = 'Configure build';
+const startBuildGroup = 'Start build';
 
-core.info(`CPUs: ${cpus}`);
-core.info(`Starting directory:  ${process.cwd()}`);
+const dirName = 'build';
+const gitApp = 'git';
+const gitParams = ['submodule', 'update', '--init', '--recursive'];
 
-try 
+const cmakeApp = 'cmake';
+const cmakeVersionParam = '--version';
+const cmakeBuildParam = '--build';
+const cmakeConfigParam = '--config';
+const cmakeParallelParam = '--parallel';
+const cmakeSourceDirParam = '..';
+const cmakeBuildDirParam = '.';
+
+const submoduleUpdateInput = 'submodule_update';
+const googletestOnInput = 'googletests_on';
+const configInput = 'config';
+
+const versionTemplate = /(?!cmake version)(?:\d{1,})/gm;
+
+function submoduleUpdate()
 {
-    var dirName = 'build';
+    core.startGroup(submoduleGroup);
+    const git = execFileSync(gitApp, gitParams);
+    core.endGroup();
+}
+
+function cmakeConfigure()
+{
+    core.startGroup(configureGroup);
+
     var buildPath = path.join(process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
@@ -24,39 +49,32 @@ try
     process.chdir(buildPath);
     core.info(`Build directory: ${process.cwd()}`);
 
-    const submoduleUpdate = core.getInput('submodule_update', { required: false });
+    const googletestOnIn = core.getInput(googletestOnInput, { required: false });
 
-    if(submoduleUpdate === 'ON')
+    var configureParameters = [cmakeSourceDirParam];
+    if(googletestOnIn === 'ON')
     {
-        core.startGroup('Submodule update');
-        const git = execFileSync('git', ['submodule', 'update', '--init', '--recursive']);
-        core.endGroup();
+        configureParameters.push(`-Dtest=${googletestOnIn}`)
     }
 
-    core.startGroup('Configure build');
-    const googletestOn = core.getInput('googletests_on', { required: false });
-
-    var configureParameters = ['..'];
-    if(googletestOn.length)
-    {
-        configureParameters.push(`-Dtest=${googletestOn}`)
-    }
-
-    const cmakeConfigure = execFileSync('cmake', configureParameters);
+    const cmakeConfigure = execFileSync(cmakeApp, configureParameters);
     core.info(cmakeConfigure);
     core.endGroup();
+}
 
-    core.startGroup('Start build');
-    const config = core.getInput('config', { required: false });
-    let buildParameters = ['--build', '.', '--config', `${config}`];
+function cmakeBuild()
+{
+    core.startGroup(startBuildGroup);
+    const configIn = core.getInput(configInput, { required: false });
+    let buildParameters = [cmakeBuildParam, cmakeBuildDirParam, cmakeConfigParam, `${configIn}`];
     
     if(cpus > 1)
     {
-        const cmakeVersion = execFileSync('cmake', ['--version']).toString();
-        var version = cmakeVersion.match(/(?!cmake version)(?:\d{1,})/gm);
+        const versionText = execFileSync(cmakeApp, [cmakeVersionParam]).toString();
+        var version = versionText.match(versionTemplate);
         if(version.length >= 2 && version[0] <= 3 && version[1] > 11)
         {
-            buildParameters.push('--parallel');
+            buildParameters.push(cmakeParallelParam);
             buildParameters.push(`${cpus}`);
         }
         else
@@ -66,9 +84,27 @@ try
         }
     }
     
-    const cmakeBuild = execFileSync('cmake', buildParameters);
+    const cmakeBuild = execFileSync(cmakeApp, buildParameters);
     core.info(cmakeBuild);
     core.endGroup();
+}
+
+var cpus = os.cpus().length;
+
+core.info(`CPUs: ${cpus}`);
+core.info(`Starting directory:  ${process.cwd()}`);
+
+try 
+{
+    const submoduleUpdateIn = core.getInput(submoduleUpdateInput, { required: false });
+    if(submoduleUpdateIn === 'ON')
+    {
+        submoduleUpdate();
+    }
+
+    cmakeConfigure();
+    cmakeBuild();
+
 } 
 catch (error)
 {
