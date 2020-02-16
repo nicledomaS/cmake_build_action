@@ -14,7 +14,7 @@ core.info(`Starting directory:  ${process.cwd()}`);
 try 
 {
     var dirName = 'build';
-    var buildPath = path.join(process.cwd(), dirName);
+    var buildPath = path.join('/home/ykovalenko/Learning', dirName);//process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
         core.info(`Create folder: ${dirName}`);
@@ -33,15 +33,40 @@ try
         core.endGroup();
     }
 
-    const googletestOn = core.getInput('submodule_update', { required: false });
-    
     core.startGroup('Configure build');
-    const cmakeConfigure = execFileSync('cmake', ['..', `-Dtest=${googletestOn}`]);
+    const googletestOn = core.getInput('submodule_update', { required: false });
+
+    var configureParameters = ['..'];
+    if(googletestOn.length)
+    {
+        configureParameters.push(`-Dtest=${googletestOn}`)
+    }
+
+    const cmakeConfigure = execFileSync('cmake', configureParameters);
     core.info(cmakeConfigure);
     core.endGroup();
 
     core.startGroup('Start build');
-    const cmakeBuild = execFileSync('cmake', ['--build', '.', '--', `-j${cpus}`]);
+    const config = core.getInput('submodule_update', { required: false });
+    let buildParameters = ['--build', '.', '--config', `${config}`];
+    
+    if(cpus > 1)
+    {
+        const cmakeVersion = execFileSync('cmake', ['--version']).toString();
+        var version = cmakeVersion.match(/(?!cmake version)(?:\d{1,})/gm);
+        if(version.length >= 2 && version[0] <= 3 && version[1] > 11)
+        {
+            buildParameters.push('--parallel');
+            buildParameters.push(`${cpus}`);
+        }
+        else
+        {
+            buildParameters.push('--');
+            buildParameters.push(`-j${cpus}`);
+        }
+    }
+    
+    const cmakeBuild = execFileSync('cmake', buildParameters);
     core.info(cmakeBuild);
     core.endGroup();
 } 

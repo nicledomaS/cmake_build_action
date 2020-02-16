@@ -9,6 +9,10 @@ inputs:
     description: 'Turn on google tests'
     required: false
     default: 'OFF'
+  config:
+    description: 'For multi-configuration tools, choose configuration <Release or Debug>'
+    required: false
+    default: 'Release'
 runs:
   using: 'node12'
   main: 'index.js'
