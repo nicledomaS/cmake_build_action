@@ -14,7 +14,7 @@ core.info(`Starting directory:  ${process.cwd()}`);
 try 
 {
     var dirName = 'build';
-    var buildPath = path.join('/home/ykovalenko/Learning', dirName);//process.cwd(), dirName);
+    var buildPath = path.join(process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
         core.info(`Create folder: ${dirName}`);
