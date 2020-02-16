@@ -1,5 +1,14 @@
 name: 'Build c++ project'
 description: 'Build c++ project with help cmake'
+inputs:
+  submodule_update:
+    description: 'Git submodule update'
+    required: false
+    default: 'OFF'
+  googletests_on:
+    description: 'Turn on google tests'
+    required: false
+    default: 'OFF'
 runs:
   using: 'node12'
   main: 'index.js'
