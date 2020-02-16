@@ -42,9 +42,9 @@ const cmakeConfigure = execFile('cmake', ['..'], (error, stdout, stderr) => {
 });
 
 
-const cmakeBuild = execFile('cmake', ['--build', '.', '-j', `${cpus}`], (error, stdout, stderr) => {
-    if (error) {
-      throw error;
-    }
-    console.log(stdout);
-});
+// const cmakeBuild = execFile('cmake', ['--build', '.', '-j', `${cpus}`], (error, stdout, stderr) => {
+//     if (error) {
+//       throw error;
+//     }
+//     console.log(stdout);
+// });
