@@ -14,12 +14,10 @@ const git = execFile('git', ['submodule', 'update', '--init', '--recursive'], (e
     console.log(stdout);
   });
 
-var dir = './build';
+var dirName = './build';
+var dir = fs.opendirSync(dirName);
 
-if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
-    fs.openSync(dir)
-}
+console.log(dir.path);
 
 const cmakeConfigure = execFile('cmake', ['..'], (error, stdout, stderr) => {
     if (error) {
@@ -27,6 +25,7 @@ const cmakeConfigure = execFile('cmake', ['..'], (error, stdout, stderr) => {
     }
     console.log(stdout);
 });
+
 
 const cmakeBuild = execFile('cmake', ['--build', '.'], (error, stdout, stderr) => {
     if (error) {
