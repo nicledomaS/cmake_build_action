@@ -1,6 +1,6 @@
 const os = require('os');
 const { execFile } = require('child_process');
-const path = require('path');
+var fs = require('fs');
 
 
 var cpus = os.cpus();
@@ -14,14 +14,21 @@ const git = execFile('git', ['submodule', 'update', '--init', '--recursive'], (e
     console.log(stdout);
   });
 
-const cmakeConfigure = execFile('cmake', ['-B', 'build'], (error, stdout, stderr) => {
+var dir = './build';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+    fs.openSync(dir)
+}
+
+const cmakeConfigure = execFile('cmake', ['..'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
     console.log(stdout);
 });
 
-const cmakeBuild = execFile('cmake', ['--build=build'], (error, stdout, stderr) => {
+const cmakeBuild = execFile('cmake', ['--build', '.'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
