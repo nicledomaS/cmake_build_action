@@ -34,7 +34,7 @@ try
     }
 
     core.startGroup('Configure build');
-    const googletestOn = core.getInput('submodule_update', { required: false });
+    const googletestOn = core.getInput('googletests_on', { required: false });
 
     var configureParameters = ['..'];
     if(googletestOn.length)
@@ -47,7 +47,7 @@ try
     core.endGroup();
 
     core.startGroup('Start build');
-    const config = core.getInput('submodule_update', { required: false });
+    const config = core.getInput('config', { required: false });
     let buildParameters = ['--build', '.', '--config', `${config}`];
     
     if(cpus > 1)
