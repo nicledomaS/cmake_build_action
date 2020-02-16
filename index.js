@@ -7,21 +7,21 @@ var cpus = os.cpus();
 
 console.log(cpus.length);
 
-const child = execFile('git', ['submodule', 'update', '--init', '--recursive'], (error, stdout, stderr) => {
+const git = execFile('git', ['submodule', 'update', '--init', '--recursive'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
     console.log(stdout);
   });
 
-const child = execFile('cmake', ['-B', 'build'], (error, stdout, stderr) => {
+const cmakeConfigure = execFile('cmake', ['-B', 'build'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
     console.log(stdout);
 });
 
-const child = execFile('cmake', ['--build=build'], (error, stdout, stderr) => {
+const cmakeBuild = execFile('cmake', ['--build=build'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
