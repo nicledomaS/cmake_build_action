@@ -23,13 +23,26 @@ try
 
     process.chdir(buildPath);
     core.info(`Build directory: ${process.cwd()}`);
-   
+
+    const submoduleUpdate = core.getInput('submodule_update', { required: false });
+
+    if(submoduleUpdate === 'ON')
+    {
+        core.startGroup('Submodule update');
+        const git = execFileSync('git', ['submodule', 'update', '--init', '--recursive']);
+        core.endGroup();
+    }
+
+    const googletestOn = core.getInput('submodule_update', { required: false });
+    
     core.startGroup('Configure build');
-    const cmakeConfigure = execFileSync('cmake', ['..']);
+    const cmakeConfigure = execFileSync('cmake', ['..', `-Dtest=${googletestOn}`]);
+    core.info(cmakeConfigure);
     core.endGroup();
 
     core.startGroup('Start build');
     const cmakeBuild = execFileSync('cmake', ['--build', '.', '--', `-j${cpus}`]);
+    core.info(cmakeBuild);
     core.endGroup();
 } 
 catch (error)
