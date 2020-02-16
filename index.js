@@ -5,7 +5,7 @@ var cpus = os.cpus();
 
 console.log(cpus.length);
 
-const child = execFile('git', ['submodule', '--init', '--recursive'], (error, stdout, stderr) => {
+const child = execFile('git', ['submodule', 'update', '--init', '--recursive'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
