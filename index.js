@@ -1,34 +1,36 @@
-const os = require('os');
+const core = require('@actions/core');
+
 const { execFileSync } = require('child_process');
-var process = require('process');
-var path = require('path');
-var fs = require('fs');
+const os = require('os');
+const process = require('process');
+const path = require('path');
+const fs = require('fs');
 
 var cpus = os.cpus().length;
 
-console.log(`CPUs: ${cpus}`);
-console.log(`Starting directory:  ${process.cwd()}`);
+core.info(`CPUs: ${cpus}`);
+core.info(`Starting directory:  ${process.cwd()}`);
 
 try 
 {
-    const git = execFileSync('git', ['submodule', 'update', '--init', '--recursive']);
-
     var dirName = 'build';
     var buildPath = path.join('/home/ykovalenko/Learning', dirName);//process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
+        core.info(`Create folder: ${dirName}`);
         fs.mkdirSync(buildPath);
     }
 
     process.chdir(buildPath);
-    console.log(`Build directory: ${process.cwd()}`);
+    core.info(`Build directory: ${process.cwd()}`);
 
+    const git = execFileSync('git', ['submodule', 'update', '--init', '--recursive']);
     const cmakeConfigure = execFileSync('cmake', ['..']);
     const cmakeBuild = execFileSync('cmake', ['--build', '.', '--', `-j${cpus}`]);
 } 
-catch (err) 
+catch (error)
 {
-    console.error(`chdir: ${err}`);
-} 
+    core.setFailed(error.message);
+}
 
 

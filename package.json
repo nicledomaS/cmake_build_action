@@ -1,0 +1,23 @@
+{
+  "name": "workflows",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://oauth:8ac2d9a76d782f08268e0a0a5ddf79f265d2aaf0@github.com/nicledomaS/workflows.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicledomaS/workflows/issues"
+  },
+  "homepage": "https://github.com/nicledomaS/workflows#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.2"
+  }
+}
