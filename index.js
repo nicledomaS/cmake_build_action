@@ -23,11 +23,7 @@ try
 
     process.chdir(buildPath);
     core.info(`Build directory: ${process.cwd()}`);
-
-    core.startGroup('Submodule update');
-    const git = execFileSync('git', ['submodule', 'update', '--init', '--recursive']);
-    core.endGroup();
-    
+   
     core.startGroup('Configure build');
     const cmakeConfigure = execFileSync('cmake', ['..']);
     core.endGroup();
