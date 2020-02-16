@@ -28,6 +28,7 @@ const cmakeConfigure = execFile('cmake', ['..'], (error, stdout, stderr) => {
     console.log(stdout);
 });
 
+
 const cmakeBuild = execFile('cmake', ['--build', '.'], (error, stdout, stderr) => {
     if (error) {
       throw error;
