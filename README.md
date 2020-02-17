@@ -27,21 +27,26 @@ jobs:
 ```
 ## Options
 ### `submodule_update`
-Turn on submodule update
-default: OFF
+Turn on submodule update.
+
+Default: `OFF`
 
 ### `cmake_args`
-List of additional cmake args (use like splitter `;`)
+List of additional cmake args (use like splitter `;`).
+
 Examle: `-D<ARG1>=value;-D<ARG1>=value`
 
 ### `run_tests`
-Turn on unit tests
-default: `OFF`
+Turn on unit tests.
+
+Default: `OFF`
 
 ### `unit_test_build`
-Cmake arg for build unit tests (if have)
+Cmake arg for build unit tests (if have).
+
 Example: `-DTEST=ON`
 
 ### `config`
-For multi-configuration tools, choose configuration <Release or Debug>
-default: `Release`
+For multi-configuration tools, choose configuration Release or Debug.
+
+Default: `Release`
