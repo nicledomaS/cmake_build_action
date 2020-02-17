@@ -27,7 +27,7 @@ const ctestApp = 'ctest';
 const ctestOutputOnFailure = '--output-on-failure';
 
 const submoduleUpdateInput = 'submodule_update';
-const cmakeArgs = 'cmake_args';
+const cmakeArgsInput = 'cmake_args';
 const runTestsInput = 'run_tests';
 const unitTestBuildInput = 'unit_test_build';
 const configInput = 'config';
@@ -45,7 +45,7 @@ function cmakeConfigure()
 {
     core.startGroup(configureGroup);
 
-    var buildPath = path.join(process.cwd(), dirName);
+    var buildPath = path.join('/home/ykovalenko/Learning', dirName); //process.cwd()
     if (!fs.existsSync(buildPath))
     {
         core.info(`Create folder: ${dirName}`);
@@ -63,11 +63,13 @@ function cmakeConfigure()
         configureParameters.push(unitTestBuildIn);
     }
     
-    const cmakeArgIn = core.getInput(cmakeArgs, { required: false });
-    const args = String(cmakeArgIn).split(';');
-    for(const arg of args)
+    const cmakeArgIn = core.getInput(cmakeArgsInput, { required: false });
+    for(const arg of cmakeArgIn.split(';'))
     {
-        configureParameters.push(arg);
+        if(arg.length > 0)
+        {
+            configureParameters.push(arg);
+        }
     }
 
     const cmakeConfigure = execFileSync(cmakeApp, configureParameters);
