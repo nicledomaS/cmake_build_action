@@ -11,5 +11,5 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: nicledomaS/workflows@add_actions_for_windows
+      - uses: nicledomaS/cmake_build_action@master
 ```
