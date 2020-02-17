@@ -5,6 +5,10 @@ inputs:
     description: 'Git submodule update'
     required: false
     default: 'OFF'
+  cmake_args:
+    description: 'Cmake args (example -D<ARG1>=value;-D<ARG1>=value)'
+    required: false
+    default: ''
   googletests_on:
     description: 'Turn on google tests'
     required: false
