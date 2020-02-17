@@ -45,7 +45,7 @@ function cmakeConfigure()
 {
     core.startGroup(configureGroup);
 
-    var buildPath = path.join('/home/ykovalenko/Learning', dirName); //process.cwd()
+    var buildPath = path.join(process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
         core.info(`Create folder: ${dirName}`);
