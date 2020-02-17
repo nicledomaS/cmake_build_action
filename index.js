@@ -23,6 +23,7 @@ const cmakeSourceDirParam = '..';
 const cmakeBuildDirParam = '.';
 
 const submoduleUpdateInput = 'submodule_update';
+const cmakeArgs = 'cmake_args';
 const googletestOnInput = 'googletests_on';
 const configInput = 'config';
 
@@ -55,6 +56,13 @@ function cmakeConfigure()
     if(googletestOnIn === 'ON')
     {
         configureParameters.push(`-Dtest=${googletestOnIn}`)
+    }
+
+    const cmakeArgIn = core.getInput(cmakeArgs, { required: false });
+    const args = String(cmakeArgIn).split(';');
+    for(const arg of args)
+    {
+        configureParameters.push(arg);
     }
 
     const cmakeConfigure = execFileSync(cmakeApp, configureParameters);
