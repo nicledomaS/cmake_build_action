@@ -9,10 +9,14 @@ inputs:
     description: 'Cmake args (example -D<ARG1>=value;-D<ARG1>=value)'
     required: false
     default: ''
-  googletests_on:
-    description: 'Turn on google tests'
+  run_tests:
+    description: 'Run unit tests'
     required: false
     default: 'OFF'
+  unit_test_build:
+    description: 'Cmake arg for turn build unit test (if need)'
+    required: false
+    default: ''
   config:
     description: 'For multi-configuration tools, choose configuration <Release or Debug>'
     required: false

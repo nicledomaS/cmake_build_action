@@ -9,6 +9,7 @@ const fs = require('fs');
 const submoduleGroup = 'Submodule update';
 const configureGroup = 'Configure build';
 const startBuildGroup = 'Start build';
+const runTests = "Run unit tests";
 
 const dirName = 'build';
 const gitApp = 'git';
@@ -22,9 +23,13 @@ const cmakeParallelParam = '--parallel';
 const cmakeSourceDirParam = '..';
 const cmakeBuildDirParam = '.';
 
+const ctestApp = 'ctest';
+const ctestOutputOnFailure = '--output-on-failure';
+
 const submoduleUpdateInput = 'submodule_update';
 const cmakeArgs = 'cmake_args';
-const googletestOnInput = 'googletests_on';
+const runTestsInput = 'run_tests';
+const unitTestBuildInput = 'unit_test_build';
 const configInput = 'config';
 
 const versionTemplate = /(?!cmake version)(?:\d{1,})/gm;
@@ -50,14 +55,14 @@ function cmakeConfigure()
     process.chdir(buildPath);
     core.info(`Build directory: ${process.cwd()}`);
 
-    const googletestOnIn = core.getInput(googletestOnInput, { required: false });
-
     var configureParameters = [cmakeSourceDirParam];
-    if(googletestOnIn === 'ON')
-    {
-        configureParameters.push(`-Dtest=${googletestOnIn}`)
-    }
 
+    const unitTestBuildIn = core.getInput(unitTestBuildInput, { required: false });
+    if(unitTestBuildIn.length > 0)
+    {
+        configureParameters.push(unitTestBuildIn);
+    }
+    
     const cmakeArgIn = core.getInput(cmakeArgs, { required: false });
     const args = String(cmakeArgIn).split(';');
     for(const arg of args)
@@ -97,6 +102,15 @@ function cmakeBuild()
     core.endGroup();
 }
 
+function cmakeRunTests()
+{
+    core.startGroup(runTests);
+    let ctestParameters = [ctestOutputOnFailure, '-j', `${cpus}`]
+    const ctestResult = execFileSync(ctestApp, ctestParameters);
+    core.info(ctestResult);
+    core.endGroup();
+}
+
 var cpus = os.cpus().length;
 
 core.info(`CPUs: ${cpus}`);
@@ -112,6 +126,12 @@ try
 
     cmakeConfigure();
     cmakeBuild();
+
+    const runTestsIn = core.getInput(runTestsInput, { required: false });
+    if(runTestsIn === 'ON')
+    {
+        cmakeRunTests()
+    }
 
 } 
 catch (error)
