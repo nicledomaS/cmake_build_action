@@ -7,9 +7,15 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  windows-build:
-    runs-on: windows-latest
+  ubuntu-build:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: nicledomaS/cmake_build_action@master
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: Build project
+      uses: nicledomaS/cmake_build_action@master
+      with:
+        submodule_update: ON
+        run_tests: ON
+        unit_test_build: -Dtest=ON
 ```
