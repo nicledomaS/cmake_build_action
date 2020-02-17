@@ -1,6 +1,12 @@
 # Cmake build action
+This action build cmake projects.
+It lets to do:
+1) Update submodules
+2) Add cmake args
+3) Build project like release or debug
+4) Build and run unit tests
 
-### Example workflow
+## Example workflow
 ```yaml
 name: C/C++ CI
 
@@ -19,3 +25,23 @@ jobs:
         run_tests: ON
         unit_test_build: -Dtest=ON
 ```
+## Options
+### `submodule_update`
+Turn on submodule update
+default: OFF
+
+### `cmake_args`
+List of additional cmake args (use like splitter `;`)
+Examle: `-D<ARG1>=value;-D<ARG1>=value`
+
+### `run_tests`
+Turn on unit tests
+default: `OFF`
+
+### `unit_test_build`
+Cmake arg for build unit tests (if have)
+Example: `-DTEST=ON`
+
+### `config`
+For multi-configuration tools, choose configuration <Release or Debug>
+default: `Release`
