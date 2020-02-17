@@ -1,5 +1,5 @@
 {
-  "name": "workflows",
+  "name": "cmake_build_action",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://oauth:8ac2d9a76d782f08268e0a0a5ddf79f265d2aaf0@github.com/nicledomaS/workflows.git"
+    "url": "git+https://github.com/nicledomaS/cmake_build_action.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nicledomaS/workflows/issues"
+    "url": "https://github.com/nicledomaS/cmake_build_action/issues"
   },
-  "homepage": "https://github.com/nicledomaS/workflows#readme",
+  "homepage": "https://github.com/nicledomaS/cmake_build_action#readme",
   "dependencies": {
     "@actions/core": "^1.2.2"
   }
