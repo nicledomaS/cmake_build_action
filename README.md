@@ -1,4 +1,4 @@
-# workflows
+# Cmake build action
 
 ### Example workflow
 ```yaml
