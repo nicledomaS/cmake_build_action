@@ -1,5 +1,6 @@
+const core = require('@actions/core');
 
-class Executor
+module.exports = class Executor
 {
     constructor(name, args)
     {
@@ -9,33 +10,12 @@ class Executor
 
     execute(exec)
     {
-        exec(this._name, this._args);
+        const result = exec(this._name, this._args);
+        core.info(result);
     }
 
     addArg(arg)
     {
         this._args.push(arg);
-    }
-}
-
-class GroupExecutor
-{
-    constructor(groupName, executors)
-    {
-        this._groupName = groupName;
-        this._executors = executors;
-    }
-
-    execute(exec)
-    {
-        for(const executor of this._executors)
-        {
-            executor.execute(exec)
-        }
-    }
-
-    addExecutor(executor)
-    {
-        this._executors.push(executor)
     }
 }

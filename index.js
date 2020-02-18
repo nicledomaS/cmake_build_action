@@ -6,6 +6,11 @@ const process = require('process');
 const path = require('path');
 const fs = require('fs');
 
+const Action = require('./action.js');
+const Executor = require('./executor.js');
+const GroupExecutor = require('./group_executor.js');
+
+
 const submoduleGroup = 'Submodule update';
 const configureGroup = 'Configure build';
 const startBuildGroup = 'Start build';
@@ -34,17 +39,13 @@ const configInput = 'config';
 
 const versionTemplate = /(?!cmake version)(?:\d{1,})/gm;
 
-function submoduleUpdate()
+function submoduleUpdateExecutor()
 {
-    core.startGroup(submoduleGroup);
-    const git = execFileSync(gitApp, gitParams);
-    core.endGroup();
+    return new GroupExecutor(submoduleGroup, [new Executor(gitApp, gitParams)]);
 }
 
-function cmakeConfigure()
+function cmakeConfigureExecutor()
 {
-    core.startGroup(configureGroup);
-
     var buildPath = path.join(process.cwd(), dirName);
     if (!fs.existsSync(buildPath))
     {
@@ -72,14 +73,11 @@ function cmakeConfigure()
         }
     }
 
-    const cmakeConfigure = execFileSync(cmakeApp, configureParameters);
-    core.info(cmakeConfigure);
-    core.endGroup();
+    return new GroupExecutor(configureGroup, [new Executor(cmakeApp, configureParameters)]);
 }
 
-function cmakeBuild()
+function cmakeBuildExecutor()
 {
-    core.startGroup(startBuildGroup);
     const configIn = core.getInput(configInput, { required: false });
     let buildParameters = [cmakeBuildParam, cmakeBuildDirParam, cmakeConfigParam, `${configIn}`];
     
@@ -99,18 +97,13 @@ function cmakeBuild()
         }
     }
     
-    const cmakeBuild = execFileSync(cmakeApp, buildParameters);
-    core.info(cmakeBuild);
-    core.endGroup();
+    return new GroupExecutor(startBuildGroup, [new Executor(cmakeApp, buildParameters)]);
 }
 
-function cmakeRunTests()
+function cmakeRunTestsExecutor()
 {
-    core.startGroup(runTests);
     let ctestParameters = [ctestOutputOnFailure, '-j', `${cpus}`]
-    const ctestResult = execFileSync(ctestApp, ctestParameters);
-    core.info(ctestResult);
-    core.endGroup();
+    return new GroupExecutor(runTests, [new Executor(ctestApp, ctestParameters)]);
 }
 
 var cpus = os.cpus().length;
@@ -120,21 +113,28 @@ core.info(`Starting directory:  ${process.cwd()}`);
 
 try 
 {
+    var action = new Action();
+
     const submoduleUpdateIn = core.getInput(submoduleUpdateInput, { required: false });
     if(submoduleUpdateIn === 'ON')
     {
-        submoduleUpdate();
+        var submoduleUpdate = submoduleUpdateExecutor();
+        action.addExecutor(submoduleUpdate);
     }
 
-    cmakeConfigure();
-    cmakeBuild();
+    var cmakeConfigure = cmakeConfigureExecutor();
+    var cmakeBuild = cmakeBuildExecutor();
+    action.addExecutor(cmakeConfigure);
+    action.addExecutor(cmakeBuild);
 
     const runTestsIn = core.getInput(runTestsInput, { required: false });
     if(runTestsIn === 'ON')
     {
-        cmakeRunTests()
+        var cmakeRunTests = cmakeRunTestsExecutor();
+        action.addExecutor(cmakeRunTests);
     }
-
+    
+    action.run();
 } 
 catch (error)
 {
