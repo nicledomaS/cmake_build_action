@@ -1,5 +1,5 @@
 # Cmake build action
-This action build cmake projects.
+This action builds cmake projects.
 It lets to do:
 1) Update submodules
 2) Add cmake args
