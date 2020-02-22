@@ -93,13 +93,13 @@ module.exports = class Builder
 
         if(this._runTests)
         {
-            let ctestExecutor = cmake_utils.cmakeRunTestsExecutor();
+            let ctestExecutor = cmake_utils.cmakeRunTestsExecutor(this._cpus, this._buildDir);
             this._action.addExecutor(new GroupExecutor(runTestsDescription, [ctestExecutor]));
         }
 
         if(this._createPackage)
         {
-            let cpackageExecutor = cmake_utils.cpackageExecutor(this._packageGenerator);
+            let cpackageExecutor = cmake_utils.cpackageExecutor(this._packageGenerator, this._buildDir);
             this._action.addExecutor(new GroupExecutor(createPackageDescriptor, [cpackageExecutor]));
         }
     }

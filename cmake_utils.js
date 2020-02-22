@@ -81,9 +81,9 @@ function cmakeBuildExecutor(cpus, cmakeVersion, cmakeBuildDir, config)
     return new Executor(cmakeApp, buildParameters);
 }
 
-function cmakeRunTestsExecutor(cpus)
+function cmakeRunTestsExecutor(cpus, cmakeBuildDir)
 {
-    let args = [cmakeFlagE, cmakeChdirCommand, ctestApp, ctestOutputOnFailure]
+    let args = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, ctestApp, ctestOutputOnFailure]
     if(cpus > 1)
     {
         args.push(cmakeParallelParam);
@@ -93,9 +93,9 @@ function cmakeRunTestsExecutor(cpus)
     return new Executor(cmakeApp, args);
 }
 
-function cmakePackageExecutor(cpakgGenerator)
+function cmakePackageExecutor(cpakgGenerator, cmakeBuildDir)
 {
-    let args = [cmakeFlagE, cmakeChdirCommand, cpackApp, cmakeFlagG, cpakgGenerator]
+    let args = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, cpackApp, cmakeFlagG, cpakgGenerator]
     if(cpus > 1)
     {
         args.push(cmakeParallelParam);
