@@ -1,5 +1,7 @@
 const { execFileSync } = require('child_process');
 
+const core = require('@actions/core');
+
 module.exports = class Action
 {
     constructor()
@@ -9,9 +11,16 @@ module.exports = class Action
 
     run()
     {
-        for(const executor of this._executors)
+        try 
         {
-            executor.execute(execFileSync);
+            for(const executor of this._executors)
+            {
+                executor.execute(execFileSync);
+            }
+        } 
+        catch (error)
+        {
+            core.setFailed(error.message);
         }
     }
 
