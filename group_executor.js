@@ -13,7 +13,8 @@ module.exports = class GroupExecutor
         core.startGroup(this._groupName);
         for(const executor of this._executors)
         {
-            executor.execute(exec);
+            let result =executor.execute(exec);
+            core.info(result);
         }
         core.endGroup();
     }
