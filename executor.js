@@ -1,4 +1,3 @@
-
 module.exports = class Executor
 {
     constructor(name, args)
@@ -9,8 +8,6 @@ module.exports = class Executor
 
     execute(exec)
     {
-        console.log(this._name);
-        console.log(this._generalArgs);
         return exec(this._name, this._generalArgs);
     }
 
