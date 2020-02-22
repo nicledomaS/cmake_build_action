@@ -100,6 +100,7 @@ module.exports = class Builder
         if(this._createPackage)
         {
             let cpackageExecutor = cmake_utils.cmakePackageExecutor(this._packageGenerator, this._buildDir);
+            
             this._action.addExecutor(new GroupExecutor(createPackageDescriptor, [cpackageExecutor]));
         }
     }
