@@ -1,5 +1,9 @@
 name: 'Build c++ project'
 description: 'Build c++ project with help cmake'
+author: nicledomaS
+branding:
+  color: black
+  icon: terminal
 inputs:
   submodule_update:
     description: 'Git submodule update'
