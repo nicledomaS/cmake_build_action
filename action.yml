@@ -20,6 +20,14 @@ inputs:
   unit_test_build:
     description: 'Cmake arg for turn build unit test (if need)'
     required: false
+    default: ''
+  create_package:
+    description: 'Create package'
+    required: false
+    default: 'OFF'
+  package_generator:
+    description: 'Package generator'
+    required: false   
     default: 'TGZ'
   config:
     description: 'For multi-configuration tools, choose configuration <Release or Debug>'
