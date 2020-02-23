@@ -16,7 +16,7 @@ inputs:
   unit_test_build:
     description: 'Cmake arg for turn build unit test (if need)'
     required: false
-    default: ''
+    default: 'TGZ'
   config:
     description: 'For multi-configuration tools, choose configuration <Release or Debug>'
     required: false

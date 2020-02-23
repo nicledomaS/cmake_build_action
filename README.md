@@ -5,6 +5,7 @@ It lets to do:
 2) Add cmake args
 3) Build project like release or debug
 4) Build and run unit tests
+5) Create package
 
 ## Example workflow
 ```yaml
@@ -45,6 +46,16 @@ Default: `OFF`
 Cmake arg for build unit tests (if have).
 
 Example: `-DTEST=ON`
+
+### `create_package`
+Turn on create package.
+
+Default: `OFF`
+
+### `package_generator`
+Set name for package generator.
+
+Default: `TGZ`
 
 ### `config`
 For multi-configuration tools, choose configuration Release or Debug.
