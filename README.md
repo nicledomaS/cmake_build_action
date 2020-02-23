@@ -21,7 +21,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2.0.0
     - name: Build project
-      uses: nicledomaS/cmake_build_action@master
+      uses: nicledomaS/cmake_build_action@v1
       with:
         submodule_update: ON
         run_tests: ON
