@@ -62,3 +62,6 @@ Default: `TGZ`
 For multi-configuration tools, choose configuration Release or Debug.
 
 Default: `Release`
+
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
+[license-url]: LICENSE
