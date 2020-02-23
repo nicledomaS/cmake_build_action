@@ -1,3 +1,4 @@
+[![License][license-image]][license-url]
 # Cmake build action
 This action builds cmake projects.
 It lets to do:
