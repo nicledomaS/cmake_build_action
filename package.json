@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/nicledomaS/cmake_build_action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.2"
+    "@actions/core": "^1.2.6"
   }
 }
