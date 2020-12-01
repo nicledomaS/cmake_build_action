@@ -14,7 +14,7 @@ module.exports = class GroupExecutor
         core.startGroup(this._groupName);
         for(const executor of this._executors)
         {
-            core.debug(process.cwd());
+            core.info(process.cwd());
             
             let result =executor.execute(exec);
             core.info(result);
