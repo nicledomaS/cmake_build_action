@@ -35,8 +35,8 @@ function getCmakeVersion()
 
 function parallelBuildArgs(cmakeVersion, cpus)
 {
-    return [""];/*cmakeVersion  > 311 ?
-                [cmakeParallelParam, `${cpus}`] : ['--', `-j${cpus}`];*/
+    return cmakeVersion  > 311 ?
+                [cmakeParallelParam, `${cpus}`] : ['--', `-j${cpus}`];
 }
 
 function cmakeMakeDirectory(cmakeBuildDir)
@@ -68,7 +68,7 @@ function cmakeConfigureExecutor(cmakeVersion, cmakeBuildDir, cmakeSourceDir, cma
 
 function cmakeBuildExecutor(cpus, cmakeVersion, cmakeBuildDir, config)
 {
-    let buildParameters = [cmakeBuildParam, cmakeBuildDir, cmakeConfigParam, config];
+    let buildParameters = [cmakeBuildParam, cmakeBuildDir/*, cmakeConfigParam, config*/];
 
     if(cpus > 1)
     {
