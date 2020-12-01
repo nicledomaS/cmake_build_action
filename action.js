@@ -20,6 +20,7 @@ module.exports = class Action
         } 
         catch (error)
         {
+            core.info(error.message);
             core.setFailed(error.message);
         }
     }
