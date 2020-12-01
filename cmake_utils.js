@@ -35,8 +35,8 @@ function getCmakeVersion()
 
 function parallelBuildArgs(cmakeVersion, cpus)
 {
-    return cmakeVersion  > 311 ?
-                [cmakeParallelParam, `${cpus}`] : ['--', `-j${cpus}`];
+    return [""];/*cmakeVersion  > 311 ?
+                [cmakeParallelParam, `${cpus}`] : ['--', `-j${cpus}`];*/
 }
 
 function cmakeMakeDirectory(cmakeBuildDir)
