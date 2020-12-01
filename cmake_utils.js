@@ -1,4 +1,5 @@
 const { execFileSync } = require('child_process');
+const core = require('@actions/core');
 
 const Executor = require('./executor.js');
 
@@ -25,6 +26,9 @@ function getCmakeVersion()
 {
     const versionTemplate = /(?:\d{1,})/gm;
     let cmakeVers = new Executor(cmakeApp, [cmakeVersionParam]);
+    
+    core.info(cmakeVers);
+    
     let result = cmakeVers.execute(execFileSync).toString();
     let version = result.match(versionTemplate);
 
@@ -68,7 +72,7 @@ function cmakeConfigureExecutor(cmakeVersion, cmakeBuildDir, cmakeSourceDir, cma
 
 function cmakeBuildExecutor(cpus, cmakeVersion, cmakeBuildDir, config)
 {
-    let buildParameters = [cmakeBuildParam, cmakeBuildDir/*, cmakeConfigParam, config*/];
+    let buildParameters = [cmakeBuildParam, cmakeBuildDir, cmakeConfigParam, config];
 
     if(cpus > 1)
     {
