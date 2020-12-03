@@ -15,13 +15,13 @@ module.exports = class Action
         {
             for(const executor of this._executors)
             {
-                let log = executor.execute(execFileSync);
-                core.info(log);
+                executor.execute(execFileSync);
             }
         } 
         catch (error)
         {
             core.setFailed(error.message);
+            core.info(error.stdout);
         }
     }
 
