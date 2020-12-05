@@ -92,7 +92,7 @@ function cmakeRunTestsExecutor(cpus, cmakeBuildDir)
     if(cpus > 1)
     {
         args.push(cmakeParallelParam);
-        args.push(cpus);
+        args.push(`${cpus}`);
     }
 
     return new Executor(cmakeApp, args);
@@ -110,3 +110,4 @@ module.exports.cmakeConfigureExecutor = cmakeConfigureExecutor;
 module.exports.cmakeBuildExecutor = cmakeBuildExecutor;
 module.exports.cmakeRunTestsExecutor = cmakeRunTestsExecutor;
 module.exports.cmakePackageExecutor = cmakePackageExecutor;
+module.exports.parallelBuildArgs = parallelBuildArgs;
