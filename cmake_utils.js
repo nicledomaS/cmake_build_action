@@ -13,6 +13,7 @@ const cmakeFlagE = '-E';
 const cmakeFlagB = '-B';
 const cmakeFlagS = '-S';
 const cmakeFlagG = '-G';
+const cmakeFlagC = '-C';
 
 const cmakeChdirCommand = 'chdir';
 const cmakeMakedirectoryComand = 'make_directory';
@@ -97,9 +98,9 @@ function cmakeRunTestsExecutor(cpus, cmakeBuildDir)
     return new Executor(cmakeApp, args);
 }
 
-function cmakePackageExecutor(cpakgGenerator, cmakeBuildDir)
+function cmakePackageExecutor(cpakgGenerator, cmakeBuildDir, config)
 {
-    let args = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, cpackApp, cmakeFlagG, cpakgGenerator];
+    let args = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, cpackApp, cmakeFlagG, cpakgGenerator, cmakeFlagC, config];
     return new Executor(cmakeApp, args);
 }
 
