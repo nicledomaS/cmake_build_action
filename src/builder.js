@@ -1,6 +1,7 @@
 const os = require('os');
 const process = require('process');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const core = require('@actions/core');
 
@@ -52,7 +53,7 @@ module.exports = class Builder
         this._sourceDir = process.cwd();
         this._buildDir = path.join(this._sourceDir, dirName);
 
-        this._action = new Action();
+        this._action = new Action(core, execFileSync);
     }
 
     build()
@@ -60,7 +61,7 @@ module.exports = class Builder
         if(this._submoduleUpdate)
         {
             let gitExec = git_utils.gitSubmoduleUpdateExecutor();
-            this._action.addExecutor(new GroupExecutor(submoduleDescription, [gitExec]));
+            this._action.addExecutor(new GroupExecutor(submoduleDescription, [gitExec], core));
         }
 
         let cmakeBuildExecutors = [];
@@ -89,18 +90,18 @@ module.exports = class Builder
                 );
         cmakeBuildExecutors.push(cmakeBuild);
 
-        this._action.addExecutor(new GroupExecutor(startBuildDescription, cmakeBuildExecutors));
+        this._action.addExecutor(new GroupExecutor(startBuildDescription, cmakeBuildExecutors, core));
 
         if(this._runTests)
         {
             let ctestExecutor = cmake_utils.cmakeRunTestsExecutor(this._cpus, this._buildDir);
-            this._action.addExecutor(new GroupExecutor(runTestsDescription, [ctestExecutor]));
+            this._action.addExecutor(new GroupExecutor(runTestsDescription, [ctestExecutor], core));
         }
 
         if(this._createPackage)
         {
             let cpackageExecutor = cmake_utils.cmakePackageExecutor(this._packageGenerator, this._buildDir, this._config);
-            this._action.addExecutor(new GroupExecutor(createPackageDescriptor, [cpackageExecutor]));
+            this._action.addExecutor(new GroupExecutor(createPackageDescriptor, [cpackageExecutor], core));
         }
     }
     

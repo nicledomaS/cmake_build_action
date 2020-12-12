@@ -1,22 +1,21 @@
-const core = require('@actions/core');
-
 module.exports = class GroupExecutor
 {
-    constructor(groupName, executors)
+    constructor(groupName, executors, core)
     {
         this._groupName = groupName;
         this._executors = executors;
+        this._core = core
     }
 
     execute(exec)
     {
-        core.startGroup(this._groupName);
+        this._core.startGroup(this._groupName);
         for(const executor of this._executors)
         {
             let result = executor.execute(exec);
-            core.info(result);
+            this._core.info(result);
         }
-        core.endGroup();
+        this._core.endGroup();
     }
 
     addExecutor(executor)
