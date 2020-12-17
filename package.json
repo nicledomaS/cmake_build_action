@@ -2,8 +2,10 @@
   "name": "cmake_build_action",
   "version": "1.3.0",
   "description": "Cmake Build Action",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "ncc build src/index.js",
+    "precommit": "npm run build && git add dist/ -f",
     "lint": "eslint .",
     "test": "nyc --reporter=html --reporter=text mocha"
   },
