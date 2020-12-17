@@ -63,5 +63,9 @@ For multi-configuration tools, choose configuration Release or Debug.
 
 Default: `Release`
 
+## Related project
+[C++ project template](https://github.com/nicledomaS/CppProjectTemplate)
+
+
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: LICENSE
