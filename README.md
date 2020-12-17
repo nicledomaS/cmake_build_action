@@ -58,6 +58,17 @@ Set name for package generator.
 
 Default: `TGZ`
 
+Configure upload artifacts. Files will save to folder `build` after build project.
+
+Example:
+
+```yaml
+- uses: actions/upload-artifact@v2
+      with:
+        path: build/*.tar.gz
+        name: artifact_${{ matrix.os }}_${{ matrix.configs }}.tar.gz
+```
+
 ### `config`
 For multi-configuration tools, choose configuration Release or Debug.
 
