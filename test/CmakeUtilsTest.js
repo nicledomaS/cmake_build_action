@@ -30,7 +30,7 @@ const ctestOutputOnFailure = '--output-on-failure';
 const cpackApp = 'cpack';
 
 const createDirArgs = [cmakeFlagE, cmakeMakedirectoryComand, cmakeBuildDir];
-const testArgs = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, ctestApp, ctestOutputOnFailure];
+const testArgs = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, ctestApp, ctestOutputOnFailure, cmakeFlagC, config];
 const packageArgs = [cmakeFlagE, cmakeChdirCommand, cmakeBuildDir, cpackApp, cmakeFlagG, cpakgGenerator, cmakeFlagC, config];
 const buildArgs = [cmakeBuildParam, cmakeBuildDir, cmakeConfigParam, config];
 const configureArgs_v312 = [cmakeFlagB, cmakeBuildDir, cmakeFlagS, cmakeSourceDir];
@@ -121,7 +121,7 @@ describe('cmake_utils', function() {
     });
 
     describe('cmakeRunTestsExecutor_cpu1', function() {
-        let cmakeExec = cmake_utils.cmakeRunTestsExecutor(1, cmakeBuildDir);
+        let cmakeExec = cmake_utils.cmakeRunTestsExecutor(1, cmakeBuildDir, config);
         let result = cmakeExec.execute((command, args)=>
         {
             it('Commands should be equal', function() {
