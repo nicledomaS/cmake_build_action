@@ -157,7 +157,7 @@ describe('cmake_utils', function() {
         newArgs.push(cmakeParallelParam);
         newArgs.push(`${cpu}`);
         
-        let cmakeExec = cmake_utils.cmakeRunTestsExecutor(cpu, cmakeBuildDir);
+        let cmakeExec = cmake_utils.cmakeRunTestsExecutor(cpu, cmakeBuildDir, config);
         let result = cmakeExec.execute((command, args)=>
         {
             it('Commands should be equal', function() {
