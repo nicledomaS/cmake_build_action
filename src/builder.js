@@ -94,7 +94,7 @@ module.exports = class Builder
 
         if(this._runTests)
         {
-            let ctestExecutor = cmake_utils.cmakeRunTestsExecutor(this._cpus, this._buildDir);
+            let ctestExecutor = cmake_utils.cmakeRunTestsExecutor(this._cpus, this._buildDir, this._config);
             this._action.addExecutor(new GroupExecutor(runTestsDescription, [ctestExecutor], core));
         }
 
