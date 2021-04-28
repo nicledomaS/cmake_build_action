@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/nicledomaS/cmake_build_action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6"
+    "@actions/core": "^1.2.6",
+    "telegraf": "^4.3.0"
   },
   "devDependencies": {
     "eslint": "^7.15.0",
