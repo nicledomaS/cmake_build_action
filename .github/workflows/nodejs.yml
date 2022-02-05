@@ -20,6 +20,6 @@ jobs:
     - run: npm install
     #- run: npm run build --if-present
     - run: npm run-script lint
-    - run: npm test
+    # - run: npm test
       env:
         CI: true

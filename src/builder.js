@@ -5,10 +5,10 @@ const { execFileSync } = require('child_process');
 
 const core = require('@actions/core');
 
-const Action = require('./action');
-const git_utils = require('./git_utils');
-const cmake_utils = require('./cmake_utils');
-const GroupExecutor = require('./group_executor');
+const Action = require('build_action_core/core/action');
+const git_utils = require('build_action_core/utils/git_utils');
+const cmake_utils = require('build_action_core/utils/cmake_utils');
+const GroupExecutor = require('build_action_core/core/group_executor');
 
 const submoduleUpdate = 'submodule_update';
 const cmakeArgs = 'cmake_args';

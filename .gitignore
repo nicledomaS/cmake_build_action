@@ -159,3 +159,5 @@ Blog
 About
 
 .vscode/
+
+package-lock.json
