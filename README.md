@@ -28,6 +28,12 @@ jobs:
         unit_test_build: -Dtest=ON
 ```
 ## Options
+### `srcdir`
+Enable alterative location for C++ source code.
+
+Default: `OFF`
+
+
 ### `submodule_update`
 Turn on submodule update.
 
