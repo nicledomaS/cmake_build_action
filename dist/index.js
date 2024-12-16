@@ -486,7 +486,7 @@ module.exports = class Builder
         this._cpus = os.cpus().length;
         this._cmakeVersion = cmake_utils.getCmakeVersion();
 
-        this._sourceDir = process.cwd();
+        this._sourceDir = process.cwd() + "/libw2v;
         this._buildDir = path.join(this._sourceDir, dirName);
 
         this._action = new Action(core, execFileSync);
