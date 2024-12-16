@@ -49,9 +49,9 @@ module.exports = class Builder {
         this._cmakeVersion = cmake_utils.getCmakeVersion();
 
         this._sourceDir = process.cwd();
-        const srcdir = core.getInput(submoduleUpdate, { required: false });
-        if (srcdir != '') {
-            this._sourceDir = this._sourceDir + '/' + srcdir;
+        const srcdirInput = core.getInput(srcdir, { required: false });
+        if (srcdirInput != '') {
+            this._sourceDir = this._sourceDir + '/' + srcdirInput;
         }
 
         this._buildDir = path.join(this._sourceDir, dirName);
