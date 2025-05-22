@@ -5,6 +5,10 @@ branding:
   color: black
   icon: terminal
 inputs:
+  srcdir:
+    description: 'C++ source code (if other than root)'
+    required: false
+    default: ''
   submodule_update:
     description: 'Git submodule update'
     required: false
